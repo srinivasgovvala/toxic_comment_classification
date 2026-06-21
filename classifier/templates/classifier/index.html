@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Toxic Comment Classifier</title>
+    <link rel="stylesheet" href="{% static 'classifier/css/style.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="app-title">
+                <h1>Toxic Comment Classifier</h1>
+                <p>Verify user comments for toxic speech markers</p>
+            </div>
+            <div class="user-profile">
+                <span class="user-email">{{ request.user.email }}</span>
+                <a href="{% url 'logout' %}" class="btn btn-secondary btn-logout" style="width: auto; padding: 8px 16px;">
+                    Logout
+                </a>
+            </div>
+        </header>
+
+        <!-- Grid Layout -->
+        <div class="grid-layout">
+            
+            <!-- Left Column: Controls and Results -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                
+                <!-- Train Model Card -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                        Train the Classifier Model
+                    </h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;">
+                        Before starting, train the Logistic Regression classification model. This simulates updating vectorizer parameters and fitting models across multi-labels.
+                    </p>
+                    <button id="btn-train-model" class="btn btn-primary">
+                        Train Model
+                    </button>
+                    <div id="training-status-div" class="training-status">
+                        <p style="color: var(--text-secondary)">Model must be trained prior to testing classifications.</p>
+                    </div>
+                </section>
+
+                <!-- Check Toxicity Card -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Check Comment Toxicity
+                    </h2>
+                    <form id="form-predict" style="display: flex; flex-direction: column; width: 100%;">
+                        <div class="form-group">
+                            <label for="txt-comment">Type Comment Text</label>
+                            <textarea 
+                                id="txt-comment" 
+                                class="input-control" 
+                                placeholder="Type or paste comment content here to inspect..." 
+                                required
+                                disabled
+                            ></textarea>
+                        </div>
+                        <button type="submit" id="btn-predict" class="btn btn-primary" disabled>
+                            Check Toxicity
+                        </button>
+                    </form>
+
+                    <!-- Predictions Box -->
+                    <div id="result-box" class="result-box" style="display: none;">
+                        <h3 class="result-box-header">Classification Results:</h3>
+                        <div id="result-grid" class="result-grid">
+                            <!-- Dynamic Badges will appear here -->
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+
+            <!-- Right Column: Theory and Visuals -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                
+                <!-- About the Model Card -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        About the Classifier
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                        This system processes input strings through a <strong>TF-IDF Vectorizer</strong> to generate numerical word n-gram features.
+                        It feeds these outputs to a <strong>Multi-Output Logistic Regression Classifier</strong>. 
+                        The backend classifies inputs across six categories: toxic, severe toxic, obscene, threat, insult, and identity hate.
+                    </p>
+                </section>
+
+                <!-- Data Visualizations Card -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        Model Metrics & Visuals
+                    </h2>
+                    <div class="visuals-selector">
+                        <button class="selector-tab" data-img-src="{% static 'classifier/images/Accuracy.jpeg' %}">Accuracy</button>
+                        <button class="selector-tab" data-img-src="{% static 'classifier/images/Comment.jpeg' %}">Comment Dist</button>
+                        <button class="selector-tab" data-img-src="{% static 'classifier/images/Most.jpeg' %}">Frequent Words</button>
+                        <button class="selector-tab" data-img-src="{% static 'classifier/images/Multi.jpeg' %}">Correlations</button>
+                    </div>
+                    
+                    <div class="visual-display-box">
+                        <div id="visual-placeholder" class="visuals-placeholder">
+                            Select a tab above to view model training metrics and dataset insights.
+                        </div>
+                        <img id="visual-img" src="" alt="Model Visualization" style="display: none;">
+                    </div>
+                </section>
+                
+            </div>
+            
+        </div>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 Toxic Comment Classifier. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- main scripts -->
+    <script src="{% static 'classifier/js/main.js' %}"></script>
+</body>
+</html>
