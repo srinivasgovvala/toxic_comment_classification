@@ -22,7 +22,21 @@ toxic_comment_project/
 |-- requirements.txt
 `-- README.md
 ```
+### Demo Credentials
+You can use these demo login details to quickly start testing the application without registration:
+Demo: https://toxic-comment-classification-chi.vercel.app/
+| Email | Password | Role |
+|-------|----------|------|
+| `admin@toxic.com` | `admin123` | Administrator |
+| `user1@toxic.com` | `user123` | Regular User |
+| `user2@toxic.com` | `user123` | Regular User |
 
+These demo accounts provide full access to all features including:
+- Login and dashboard access
+- Comment toxicity prediction
+- Model training
+- View analytics and visualizations
+  
 ## Setup
 
 1. Create and activate a virtual environment.
