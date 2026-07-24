@@ -11,17 +11,6 @@ A Django web application for classifying user comments across multiple toxicity 
 
 The app includes login and registration screens, a dashboard, a prediction API, and a training script that builds a TF-IDF + Logistic Regression multi-output classifier from the training dataset.
 
-## Project Structure
-
-```text
-toxic_comment_project/
-|-- classifier/                  # Django app, templates, static files, trained model files
-|-- modelTraining/               # Dataset and model training script
-|-- toxic_comment_project/       # Django project settings and URLs
-|-- manage.py
-|-- requirements.txt
-`-- README.md
-```
 ### Demo Credentials
 You can use these demo login details to quickly start testing the application without registration:
 Demo: https://toxic-comment-classification-chi.vercel.app/
@@ -36,6 +25,19 @@ These demo accounts provide full access to all features including:
 - Comment toxicity prediction
 - Model training
 - View analytics and visualizations
+
+## Project Structure
+
+```text
+toxic_comment_project/
+|-- classifier/                  # Django app, templates, static files, trained model files
+|-- modelTraining/               # Dataset and model training script
+|-- toxic_comment_project/       # Django project settings and URLs
+|-- manage.py
+|-- requirements.txt
+`-- README.md
+```
+
   
 ## Setup
 
