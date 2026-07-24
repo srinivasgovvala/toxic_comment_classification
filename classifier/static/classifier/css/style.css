@@ -7,7 +7,8 @@
     --border-color: rgba(255, 255, 255, 0.08);
     --text-primary: #f3f4f6;
     --text-secondary: #9ca3af;
-    
+    --text-tertiary: #6b7280;
+
     --accent-primary: #6366f1;
     --accent-primary-hover: #4f46e5;
     --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
