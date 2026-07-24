@@ -13,7 +13,7 @@ The app includes login and registration screens, a dashboard, a prediction API, 
 
 ### Demo Credentials
 You can use these demo login details to quickly start testing the application without registration:
-Demo: https://toxic-comment-classification-chi.vercel.app/
+Demo: [https://toxic-comment-classification-chi.vercel.app/](https://toxic-comment-classification-nine.vercel.app/login/?next=/)
 | Email | Password | Role |
 |-------|----------|------|
 | `admin@toxic.com` | `admin123` | Administrator |
