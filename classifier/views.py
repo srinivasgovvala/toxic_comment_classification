@@ -85,8 +85,13 @@ def register_api(request):
     if not email or not password:
         return JsonResponse({"message": "Email and password are required"}, status=400)
         
-    if User.objects.filter(username=email).exists():
-        return JsonResponse({"message": "Email is already registered"}, status=400)
+    try:
+        if User.objects.filter(username=email).exists():
+            return JsonResponse({"message": "Email is already registered"}, status=400)
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return JsonResponse({"message": f"Database error (Is Vercel Postgres attached?): {str(e)}"}, status=500)
         
     try:
         user = User.objects.create_user(username=email, email=email, password=password)
